@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script> -->
+    <link rel="stylesheet" href="./src/output.css">
+
+</head>
+<body class="flex items-center justify-center flex-col h-dvh w-dvw flex-col bg-[#121314] text-white">
+
+    <main >
+
+        <div class="relative right-[25px] h-[107px] w-[440px] bg-[#000d12] text-white mb-[28px] flex justify-center items-center gap-6 ">
+            <button id="profileLetter" class="w-[82px] h-[82px] border-2 rounded-full border-white flex justify-center items-center bg-white text-black text-[32px] font-bold ">
+                
+            </button>
+
+            <h1 id="welcomeMessage"
+            class="text-[30px] font-semibold text-white leading-tight">Welcome </h1>
+
+        </div>
+
+        <div class="h-[225px] w-[385px] border-2 border-white bg-[#1d1923] border-dashed mb-[28px] flex justify-center items-center">
+            <button id="addUserButton" class="w-[82px] h-[82px] border-2 rounded-full border-white flex justify-center items-center">
+                <img src="asset/plus-symbol-button.png" alt="plus icon" class="h-[41px] w-[41px] invert">
+            </button>
+        </div>
+        <div class="h-[225px] w-[385px] border-2 border-white bg-[#1d1923] border-dashed mb-[28px] flex justify-center items-center">
+            <button class="w-[82px] h-[82px] border-2 rounded-full border-white flex justify-center items-center">
+                <img src="asset/plus-symbol-button.png" alt="plus icon" class="h-[41px] w-[41px] invert">
+            </button>
+        </div>
+        <div class="h-[225px] w-[385px] border-2 border-white bg-[#1d1923] border-dashed  flex justify-center items-center">
+            <button class="w-[82px] h-[82px] border-2 rounded-full border-white flex justify-center items-center">
+                <img src="asset/plus-symbol-button.png" alt="plus icon" class="h-[41px] w-[41px] invert">
+            </button>
+        </div>
+
+        
+        
+    </main>
+
+    <script>
+        const user = JSON.parse(
+            localStorage.getItem("user")
+        );
+
+        console.log("DASHBOARD USER:");
+        console.log(user);
+
+        if (!user) {
+            window.location.href = "./signin.html";
+        } else {
+            document.getElementById("welcomeMessage").textContent =
+                `Welcome ${user.name}`;
+
+            const firstLetter = user.name
+                .charAt(0)
+                .toUpperCase();
+
+            document.getElementById("profileLetter").textContent =
+                firstLetter;
+        }
+
+        async function getAllUsers() {
+
+                const response = await fetch(
+                    "http://localhost:3001/from/all"
+                );
+
+                const result = await response.json();
+
+                console.log("ALL USERS:");
+                console.log("All user loaded Sucessfully");
+            }
+
+            getAllUsers();
+
+        document.getElementById("addUserButton").addEventListener("click", () => {
+                window.location.href = "./signup.html";
+            });
+
+
+    </script>
+    
+</body>
+</html>

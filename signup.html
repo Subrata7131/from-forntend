@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en"> 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>login page</title>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script> -->
+    <link rel="stylesheet" href="./src/output.css">
+</head>
+
+<body class="flex items-center justify-center flex-col h-dvh w-dvw bg-[#121314] text-white">
+
+    <a href ="index.html" class="h-[69px] w-[69px] rounded-[20px] bg-white mr-[350px] flex items-center justify-center">
+        <img class="h-[41px] w-[41px] object-contain" src="./asset/back.png" alt="arrow icon">
+    </a>
+
+    <!-- Changed to <form> and fixed the ID case mismatch -->
+    <form id="signupForm">
+        <h1 class="text-[36px] font-semibold text-white tracking-wide flex justify-center mb-[100px]">
+            Signup
+        </h1>
+        
+        <!-- Updated IDs to match your JavaScript variables exactly -->
+        <input class="h-[78px] w-[353px] block rounded-[44px] bg-[#1b0839] mb-[46px] text-[36px] px-6" id="name" placeholder="Name" required>
+
+        <input class="h-[78px] w-[353px] block rounded-[44px] bg-[#1b0839] text-[36px] mb-[46px] px-6" id="email" type="email" placeholder="Email" required>
+
+        <input class="h-[78px] w-[353px] block rounded-[44px] bg-[#1b0839] text-[36px] mb-[46px] px-6" id="password" type="password" placeholder="Password" required>
+
+        <!-- Removed onclick handler and added type="submit" -->
+        <button type="submit" class="h-[78px] w-[353px] block rounded-[44px] bg-white text-[36px] mb-[46px] text-black" id="button">Next</button>
+    </form>
+    
+    <script>
+        const form = document.getElementById("signupForm");
+
+        form.addEventListener("submit", async (event) => {
+            event.preventDefault();
+
+            const name = document.getElementById("name").value;
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
+
+            const data = {
+                name: name,
+                email: email,
+                password: password
+            };
+
+            try {
+                const response = await fetch(
+                    "http://localhost:3001/from/submit",
+                    {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify(data)
+                    }
+                );
+
+                const result = await response.json();
+                console.log(error);
+
+                if (response.ok) {
+
+                    const user = {
+                        name: name,
+                        email: email
+                    };
+
+                    localStorage.setItem(
+                        "user",
+                        JSON.stringify(user)
+                    );
+
+                    window.location.href = "./dashboard.html";
+                }
+
+            } catch (error) {
+                console.error("Error:", error);
+            }
+        });
+    </script>
+</body>
+</html>
